@@ -2,14 +2,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import React from "react";
-
-interface product {
-   id: number;
-   title: string;
-   description: string;
-   price: number;
-   image: string;
-}
+import { product } from "../App";
 
 interface productProp {
    product?: {
@@ -44,7 +37,7 @@ export default function ProductDetails(props: productProp) {
             <Grid item xs={12} md={8}>
                <Typography variant="h4">{props.product?.title}</Typography>
                <Typography mt={1} variant="h5" color="secondary">
-                  ₹{props.product?.price}
+                  ${props.product?.price}
                </Typography>
                <Typography mt={2} mb={3} variant="body2">
                   {props.product?.description}

@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 
-interface product {
+export interface product {
    id: number;
    title: string;
    description: string;

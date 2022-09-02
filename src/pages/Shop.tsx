@@ -3,14 +3,7 @@ import { Box, Grid } from "@mui/material";
 import { getAllProducts } from "../utils/api-helper";
 import ProductCard from "../components/ProductCard/ProductCard";
 import CircularProgress from "@mui/material/CircularProgress";
-
-interface product {
-   id: number;
-   title: string;
-   description: string;
-   price: number;
-   image: string;
-}
+import { product } from "../App";
 
 interface productProps {
    wishlist: product[];

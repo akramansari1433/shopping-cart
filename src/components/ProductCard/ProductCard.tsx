@@ -13,16 +13,8 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
 import { useNavigate } from "react-router-dom";
-
-interface product {
-   id: number;
-   title: string;
-   description: string;
-   price: number;
-   image: string;
-}
+import { product } from "../../App";
 
 interface productProp {
    product: {
@@ -70,6 +62,9 @@ export default function ProductCard(props: productProp) {
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                      {props.product.description.substring(0, 100)}
+                  </Typography>
+                  <Typography mt={2} variant="h6" color="secondary">
+                     ${props.product.price}
                   </Typography>
                </CardContent>
             </Box>

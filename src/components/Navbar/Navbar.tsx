@@ -9,19 +9,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Button, styled } from "@mui/material";
 import { Link } from "react-router-dom";
+import { product } from "../../App";
 
 const StyledToolbar = styled(Toolbar)({
    display: "flex",
    justifyContent: "space-between",
 });
-
-interface product {
-   id: number;
-   title: string;
-   description: string;
-   price: number;
-   image: string;
-}
 
 interface productProp {
    wishlist: product[];
@@ -55,20 +48,12 @@ export default function Navbar(props: productProp) {
                   </Button>
                </Box>
                <Box>
-                  <IconButton
-                     size="large"
-                     aria-label="show 4 new mails"
-                     color="inherit"
-                  >
+                  <IconButton size="large" color="inherit">
                      <Badge badgeContent={props.wishlist.length} color="error">
                         <FavoriteIcon />
                      </Badge>
                   </IconButton>
-                  <IconButton
-                     size="large"
-                     aria-label="show 17 new notifications"
-                     color="inherit"
-                  >
+                  <IconButton size="large" color="inherit">
                      <Badge badgeContent={props.cart.length} color="error">
                         <ShoppingCartIcon />
                      </Badge>
