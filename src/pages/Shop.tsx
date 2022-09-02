@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
-import { getAllProducts } from "../api-helper";
+import { getAllProducts } from "../utils/api-helper";
 import ProductCard from "../components/ProductCard/ProductCard";
 import CircularProgress from "@mui/material/CircularProgress";
 
