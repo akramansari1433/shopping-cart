@@ -1,7 +1,15 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import React from "react";
+
+interface product {
+   id: number;
+   title: string;
+   description: string;
+   price: number;
+   image: string;
+}
 
 interface productProp {
    product?: {
@@ -11,9 +19,18 @@ interface productProp {
       price: number;
       image: string;
    };
+   setWishlist: React.Dispatch<React.SetStateAction<any>>;
+   setCart: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export default function ProductDetails(props: productProp) {
+   const handleWishlist = (p?: product) => {
+      props.setWishlist((prevState: product[]) => [...prevState, p]);
+   };
+
+   const handleCart = (p?: product) => {
+      props.setCart((prevState: product[]) => [...prevState, p]);
+   };
    return (
       <Box sx={{ padding: 3 }}>
          <Grid container justifyContent="center" spacing={3}>
@@ -34,17 +51,17 @@ export default function ProductDetails(props: productProp) {
                </Typography>
                <Button
                   startIcon={<FavoriteIcon />}
-                  variant="contained"
                   color="warning"
                   style={{ marginTop: 20, marginRight: 10 }}
+                  onClick={() => handleWishlist(props.product)}
                >
                   Add to wishlist
                </Button>
                <Button
                   startIcon={<ShoppingCartIcon />}
                   color="warning"
-                  variant="contained"
                   style={{ marginTop: 20 }}
+                  onClick={() => handleCart(props.product)}
                >
                   Add to Cart
                </Button>

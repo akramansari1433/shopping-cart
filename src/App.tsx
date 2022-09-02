@@ -39,7 +39,13 @@ function App() {
                />
                <Route
                   path="/shop/:id"
-                  element={<ProductDetails product={product} />}
+                  element={
+                     <ProductDetails
+                        product={product}
+                        setWishlist={setWishlist}
+                        setCart={setCart}
+                     />
+                  }
                />
             </Routes>
          </BrowserRouter>
