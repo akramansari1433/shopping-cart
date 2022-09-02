@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 
-interface p {
+interface product {
    id: number;
    title: string;
    description: string;
@@ -15,15 +15,28 @@ interface p {
 }
 
 function App() {
-   const [product, setProduct] = useState<p>();
+   const [product, setProduct] = useState<product>();
+   const [wishlist, setWishlist] = useState<product[]>([]);
+   const [cart, setCart] = useState<product[]>([]);
 
    return (
       <>
          <BrowserRouter>
-            <Navbar />
+            <Navbar wishlist={wishlist} cart={cart} />
             <Routes>
                <Route path="/" element={<Home />} />
-               <Route path="/shop" element={<Shop setProduct={setProduct} />} />
+               <Route
+                  path="/shop"
+                  element={
+                     <Shop
+                        setProduct={setProduct}
+                        setWishlist={setWishlist}
+                        setCart={setCart}
+                        wishlist={wishlist}
+                        cart={cart}
+                     />
+                  }
+               />
                <Route
                   path="/shop/:id"
                   element={<ProductDetails product={product} />}

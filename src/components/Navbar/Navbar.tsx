@@ -15,7 +15,20 @@ const StyledToolbar = styled(Toolbar)({
    justifyContent: "space-between",
 });
 
-export default function Navbar() {
+interface product {
+   id: number;
+   title: string;
+   description: string;
+   price: number;
+   image: string;
+}
+
+interface productProp {
+   wishlist: product[];
+   cart: product[];
+}
+
+export default function Navbar(props: productProp) {
    return (
       <Box sx={{ flexGrow: 1 }}>
          <AppBar position="static">
@@ -47,7 +60,7 @@ export default function Navbar() {
                      aria-label="show 4 new mails"
                      color="inherit"
                   >
-                     <Badge badgeContent={4} color="error">
+                     <Badge badgeContent={props.wishlist.length} color="error">
                         <FavoriteIcon />
                      </Badge>
                   </IconButton>
@@ -56,7 +69,7 @@ export default function Navbar() {
                      aria-label="show 17 new notifications"
                      color="inherit"
                   >
-                     <Badge badgeContent={17} color="error">
+                     <Badge badgeContent={props.cart.length} color="error">
                         <ShoppingCartIcon />
                      </Badge>
                   </IconButton>

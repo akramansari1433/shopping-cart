@@ -13,12 +13,28 @@ interface product {
 }
 
 interface productProps {
+   wishlist: product[];
+   cart: product[];
    setProduct: React.Dispatch<React.SetStateAction<any>>;
+   setWishlist: React.Dispatch<React.SetStateAction<any>>;
+   setCart: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export default function Shop(props: productProps) {
    const [products, setProducts] = useState<product[]>([]);
    const [loading, setLoading] = useState<boolean>(false);
+
+   const inWishlist = (id: number): boolean => {
+      if (props.wishlist.find((product) => product.id === id)) {
+         return true;
+      } else return false;
+   };
+
+   const inCart = (id: number): boolean => {
+      if (props.cart.find((product) => product.id === id)) {
+         return true;
+      } else return false;
+   };
 
    useEffect(() => {
       setLoading(true);
@@ -47,8 +63,16 @@ export default function Shop(props: productProps) {
             </Box>
          ) : (
             <Grid container justifyContent="center" spacing={3}>
-               {products.map((p) => (
-                  <ProductCard p={p} key={p.id} setProduct={props.setProduct} />
+               {products.map((product) => (
+                  <ProductCard
+                     product={product}
+                     key={product.id}
+                     setProduct={props.setProduct}
+                     setWishlist={props.setWishlist}
+                     setCart={props.setCart}
+                     inWishlist={inWishlist(product.id)}
+                     inCart={inCart(product.id)}
+                  />
                ))}
             </Grid>
          )}
