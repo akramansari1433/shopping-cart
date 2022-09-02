@@ -25,7 +25,7 @@ export default function Navbar() {
                   <Button
                      variant="text"
                      size="large"
-                     color="error"
+                     color="secondary"
                      component={Link}
                      to="/"
                   >
@@ -34,7 +34,7 @@ export default function Navbar() {
                   <Button
                      variant="text"
                      size="large"
-                     color="error"
+                     color="secondary"
                      component={Link}
                      to="/shop"
                   >
