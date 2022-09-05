@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, Grid } from "@mui/material";
-import { getAllProducts } from "../utils/api-helper";
 import ProductCard from "../components/ProductCard/ProductCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import { product } from "../App";
@@ -8,15 +7,14 @@ import { product } from "../App";
 interface productProps {
    wishlist: product[];
    cart: product[];
+   products: product[];
+   loading: boolean;
    setProduct: React.Dispatch<React.SetStateAction<any>>;
    setWishlist: React.Dispatch<React.SetStateAction<any>>;
    setCart: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export default function Shop(props: productProps) {
-   const [products, setProducts] = useState<product[]>([]);
-   const [loading, setLoading] = useState<boolean>(false);
-
    const inWishlist = (id: number): boolean => {
       if (props.wishlist.find((product) => product.id === id)) {
          return true;
@@ -29,22 +27,9 @@ export default function Shop(props: productProps) {
       } else return false;
    };
 
-   useEffect(() => {
-      setLoading(true);
-      getAllProducts()
-         .then((res) => {
-            if (res) {
-               setProducts(res);
-               setLoading(false);
-            }
-         })
-         .catch((error) => {
-            console.log(error);
-         });
-   }, []);
    return (
       <Box sx={{ padding: 3 }}>
-         {loading ? (
+         {props.loading ? (
             <Box
                sx={{
                   display: "flex",
@@ -56,7 +41,7 @@ export default function Shop(props: productProps) {
             </Box>
          ) : (
             <Grid container justifyContent="center" spacing={3}>
-               {products.map((product) => (
+               {props.products.map((product) => (
                   <ProductCard
                      product={product}
                      key={product.id}

@@ -47,6 +47,16 @@ export default function Navbar(props: productProp) {
                   >
                      Shop
                   </Button>
+
+                  <Button
+                     variant="text"
+                     size="large"
+                     color="secondary"
+                     component={Link}
+                     to="/admin"
+                  >
+                     Admin
+                  </Button>
                </Box>
 
                <Box>

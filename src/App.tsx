@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -7,6 +7,8 @@ import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
+import Admin from "./pages/Admin";
+import { getAllProducts } from "./utils/api-helper";
 
 export interface product {
    id: number;
@@ -17,9 +19,26 @@ export interface product {
 }
 
 function App() {
+   const [products, setProducts] = useState<product[]>([]);
    const [product, setProduct] = useState<product>();
    const [wishlist, setWishlist] = useState<product[]>([]);
    const [cart, setCart] = useState<product[]>([]);
+
+   const [loading, setLoading] = useState<boolean>(false);
+
+   useEffect(() => {
+      setLoading(true);
+      getAllProducts()
+         .then((res) => {
+            if (res) {
+               setProducts(res);
+               setLoading(false);
+            }
+         })
+         .catch((error) => {
+            console.log(error);
+         });
+   }, []);
 
    return (
       <>
@@ -31,6 +50,8 @@ function App() {
                   path="/shop"
                   element={
                      <Shop
+                        products={products}
+                        loading={loading}
                         setProduct={setProduct}
                         setWishlist={setWishlist}
                         setCart={setCart}
@@ -74,6 +95,17 @@ function App() {
                         setWishlist={setWishlist}
                         setCart={setCart}
                         cart={cart}
+                     />
+                  }
+               />
+
+               <Route
+                  path="/admin"
+                  element={
+                     <Admin
+                        products={products}
+                        loading={loading}
+                        setProducts={setProducts}
                      />
                   }
                />

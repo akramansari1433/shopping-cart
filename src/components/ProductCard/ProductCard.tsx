@@ -17,13 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { product } from "../../App";
 
 interface productProp {
-   product: {
-      id: number;
-      title: string;
-      description: string;
-      price: number;
-      image: string;
-   };
+   product: product;
    inWishlist: boolean;
    inCart: boolean;
    setProduct: React.Dispatch<React.SetStateAction<any>>;
@@ -71,10 +65,14 @@ export default function ProductCard(props: productProp) {
                ></CardMedia>
                <CardContent>
                   <Typography variant="h6">
-                     {props.product.title.substring(0, 20)}
+                     {props.product.title.length > 20
+                        ? props.product.title.substring(0, 20)
+                        : props.product.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                     {props.product.description.substring(0, 100)}
+                     {props.product.description.length > 100
+                        ? props.product.description.substring(0, 100)
+                        : props.product.description}
                   </Typography>
                   <Typography mt={2} variant="h6" color="secondary">
                      ${props.product.price}
