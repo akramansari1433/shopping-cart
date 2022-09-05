@@ -60,7 +60,10 @@ export default function ProductCard(props: productProp) {
    return (
       <Grid item key={props.product.id}>
          <Card sx={{ maxWidth: 300 }}>
-            <Box onClick={() => handleOnClick(props.product)}>
+            <Box
+               onClick={() => handleOnClick(props.product)}
+               sx={{ cursor: "pointer" }}
+            >
                <CardMedia
                   component="img"
                   src={props.product.image}
