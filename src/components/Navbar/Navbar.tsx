@@ -48,7 +48,12 @@ export default function Navbar(props: productProp) {
                   </Button>
                </Box>
                <Box>
-                  <IconButton size="large" color="inherit">
+                  <IconButton
+                     size="large"
+                     color="inherit"
+                     component={Link}
+                     to="/wishlist"
+                  >
                      <Badge badgeContent={props.wishlist.length} color="error">
                         <FavoriteIcon />
                      </Badge>

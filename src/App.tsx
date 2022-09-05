@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
+import Wishlist from "./pages/Wishlist";
 
 export interface product {
    id: number;
@@ -44,6 +45,19 @@ function App() {
                         product={product}
                         setWishlist={setWishlist}
                         setCart={setCart}
+                     />
+                  }
+               />
+
+               <Route
+                  path="/wishlist"
+                  element={
+                     <Wishlist
+                        wishlist={wishlist}
+                        setProduct={setProduct}
+                        setWishlist={setWishlist}
+                        setCart={setCart}
+                        cart={cart}
                      />
                   }
                />
