@@ -40,7 +40,12 @@ export default function ProductCard(props: productProp) {
    };
 
    const handleWishlist = (p: product) => {
-      props.setWishlist((prevState: product[]) => [...prevState, p]);
+      props.setWishlist((prevState: product[]) => {
+         if (prevState.find((product) => product.id === p.id)) {
+            return prevState.filter((product) => product.id !== p.id);
+         }
+         return [...prevState, p];
+      });
    };
 
    const handleCart = (p: product) => {
