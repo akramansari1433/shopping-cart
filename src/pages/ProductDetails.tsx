@@ -12,11 +12,25 @@ interface productProp {
       price: number;
       image: string;
    };
+   wishlist: product[];
+   cart: product[];
    setWishlist: React.Dispatch<React.SetStateAction<any>>;
    setCart: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export default function ProductDetails(props: productProp) {
+   const inWishlist = (id?: number): boolean => {
+      if (props.wishlist.find((product) => product.id === id)) {
+         return true;
+      } else return false;
+   };
+
+   const inCart = (id?: number): boolean => {
+      if (props.cart.find((product) => product.id === id)) {
+         return true;
+      } else return false;
+   };
+
    const handleWishlist = (p?: product) => {
       props.setWishlist((prevState: product[]) => {
          if (prevState.find((product) => product.id === p?.id)) {
@@ -27,7 +41,12 @@ export default function ProductDetails(props: productProp) {
    };
 
    const handleCart = (p?: product) => {
-      props.setCart((prevState: product[]) => [...prevState, p]);
+      props.setCart((prevState: product[]) => {
+         if (prevState.find((product) => product.id === p?.id)) {
+            return prevState.filter((product) => product.id !== p?.id);
+         }
+         return [...prevState, p];
+      });
    };
    return (
       <Box sx={{ padding: 3 }}>
@@ -53,7 +72,9 @@ export default function ProductDetails(props: productProp) {
                   style={{ marginTop: 20, marginRight: 10 }}
                   onClick={() => handleWishlist(props.product)}
                >
-                  Add to wishlist
+                  {inWishlist(props.product?.id)
+                     ? "Remove from wishlist"
+                     : "Add to Wishlist"}
                </Button>
                <Button
                   startIcon={<ShoppingCartIcon />}
@@ -61,7 +82,9 @@ export default function ProductDetails(props: productProp) {
                   style={{ marginTop: 20 }}
                   onClick={() => handleCart(props.product)}
                >
-                  Add to Cart
+                  {inCart(props.product?.id)
+                     ? "Remove from cart"
+                     : "Add to cart"}
                </Button>
             </Grid>
          </Grid>

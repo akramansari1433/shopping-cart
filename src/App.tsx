@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
+import Cart from "./pages/Cart";
 
 export interface product {
    id: number;
@@ -45,6 +46,8 @@ function App() {
                         product={product}
                         setWishlist={setWishlist}
                         setCart={setCart}
+                        wishlist={wishlist}
+                        cart={cart}
                      />
                   }
                />
@@ -53,6 +56,19 @@ function App() {
                   path="/wishlist"
                   element={
                      <Wishlist
+                        wishlist={wishlist}
+                        setProduct={setProduct}
+                        setWishlist={setWishlist}
+                        setCart={setCart}
+                        cart={cart}
+                     />
+                  }
+               />
+
+               <Route
+                  path="/cart"
+                  element={
+                     <Cart
                         wishlist={wishlist}
                         setProduct={setProduct}
                         setWishlist={setWishlist}

@@ -3,7 +3,7 @@ import { product } from "../App";
 import { Box, Grid, Typography } from "@mui/material";
 import ProductCard from "../components/ProductCard/ProductCard";
 
-interface wishlistProp {
+interface cartProp {
    wishlist: product[];
    cart: product[];
    setWishlist: React.Dispatch<React.SetStateAction<any>>;
@@ -11,7 +11,7 @@ interface wishlistProp {
    setProduct: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function Wishlist(props: wishlistProp) {
+export default function Cart(props: cartProp) {
    const inWishlist = (id: number): boolean => {
       if (props.wishlist.find((product) => product.id === id)) {
          return true;
@@ -26,9 +26,9 @@ export default function Wishlist(props: wishlistProp) {
 
    return (
       <Box sx={{ padding: 3 }}>
-         {props.wishlist.length ? (
+         {props.cart.length ? (
             <Grid container justifyContent="center" spacing={3}>
-               {props.wishlist.map((product) => (
+               {props.cart.map((product) => (
                   <ProductCard
                      product={product}
                      key={product.id}
@@ -42,7 +42,7 @@ export default function Wishlist(props: wishlistProp) {
             </Grid>
          ) : (
             <Typography variant="h2" textAlign="center">
-               Wishlist is empty! ☹️
+               Cart is empty! ☹️
             </Typography>
          )}
       </Box>

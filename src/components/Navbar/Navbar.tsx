@@ -27,6 +27,7 @@ export default function Navbar(props: productProp) {
          <AppBar position="static">
             <StyledToolbar>
                <Typography variant="h5">Shopping Cart</Typography>
+
                <Box>
                   <Button
                      variant="text"
@@ -47,6 +48,7 @@ export default function Navbar(props: productProp) {
                      Shop
                   </Button>
                </Box>
+
                <Box>
                   <IconButton
                      size="large"
@@ -58,7 +60,13 @@ export default function Navbar(props: productProp) {
                         <FavoriteIcon />
                      </Badge>
                   </IconButton>
-                  <IconButton size="large" color="inherit">
+
+                  <IconButton
+                     size="large"
+                     color="inherit"
+                     component={Link}
+                     to="/cart"
+                  >
                      <Badge badgeContent={props.cart.length} color="error">
                         <ShoppingCartIcon />
                      </Badge>

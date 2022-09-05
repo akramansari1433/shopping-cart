@@ -49,7 +49,12 @@ export default function ProductCard(props: productProp) {
    };
 
    const handleCart = (p: product) => {
-      props.setCart((prevState: product[]) => [...prevState, p]);
+      props.setCart((prevState: product[]) => {
+         if (prevState.find((product) => product.id === p.id)) {
+            return prevState.filter((product) => product.id !== p.id);
+         }
+         return [...prevState, p];
+      });
    };
 
    return (
