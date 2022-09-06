@@ -1,8 +1,12 @@
 export const LOADING_DATA = "LOADING_DATA";
 export const SET_PRODUCTS = "SET_PRODUCTS";
 export const SET_ERROR = "SET_ERROR";
+export const SET_WISHLIST = "SET_WISHLIST";
+export const SET_CART = "SET_CART";
+export const ADD_PRODUCT = "ADD_PRODUCT";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
-export type Product = {
+export type ProductType = {
    id: number;
    title: string;
    description: string;
@@ -16,7 +20,7 @@ interface LoadingData {
 
 interface SetProducts {
    type: typeof SET_PRODUCTS;
-   payload: Product[];
+   payload: ProductType[];
 }
 
 interface SetError {
@@ -24,4 +28,31 @@ interface SetError {
    payload: string;
 }
 
-export type ProductDispatchTypes = LoadingData | SetProducts | SetError;
+interface SetWishlist {
+   type: typeof SET_WISHLIST;
+   payload: ProductType;
+}
+
+interface SetCart {
+   type: typeof SET_CART;
+   payload: ProductType;
+}
+
+interface AddProduct {
+   type: typeof ADD_PRODUCT;
+   payload: ProductType;
+}
+
+interface DeleteProduct {
+   type: typeof DELETE_PRODUCT;
+   payload: number;
+}
+
+export type ProductDispatchTypes =
+   | LoadingData
+   | SetProducts
+   | SetError
+   | SetCart
+   | SetWishlist
+   | AddProduct
+   | DeleteProduct;

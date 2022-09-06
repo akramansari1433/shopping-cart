@@ -9,25 +9,23 @@ import {
    Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import React, { useState } from "react";
-import { product } from "../App";
+import React, { Dispatch, useState } from "react";
 import AddProduct from "../components/AddProduct/AddProduct";
+import { useSelector } from "react-redux";
+import { RootStore } from "../redux/store";
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../redux/actions/ProductActions";
 
-interface productProp {
-   products: product[];
-   loading: boolean;
-   setProducts: React.Dispatch<React.SetStateAction<any>>;
-}
-
-export default function Admin(props: productProp) {
+export default function Admin() {
    const [open, setOpen] = useState<boolean>(false);
    const handleOpen = () => setOpen(true);
    const handleClose = () => setOpen(false);
 
-   const handleDelete = (id: Number) => {
-      props.setProducts((prevState: product[]) =>
-         prevState.filter((product) => product.id !== id)
-      );
+   const { products } = useSelector((state: RootStore) => state.products);
+   const dispatch: Dispatch<any> = useDispatch();
+
+   const handleDelete = (id: number) => {
+      dispatch(deleteProduct(id));
    };
    return (
       <Box p={3}>
@@ -37,7 +35,7 @@ export default function Admin(props: productProp) {
             </Button>
          </Box>
          <Grid container justifyContent="center" spacing={3}>
-            {props.products.map((product) => (
+            {products?.map((product) => (
                <Grid item key={product.id}>
                   <Card sx={{ maxWidth: 300 }}>
                      <Box sx={{ cursor: "pointer" }}>
@@ -80,7 +78,6 @@ export default function Admin(props: productProp) {
             open={open}
             handleOpen={handleOpen}
             handleClose={handleClose}
-            setProducts={props.setProducts}
          />
       </Box>
    );

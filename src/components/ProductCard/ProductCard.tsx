@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import {
    Box,
    Button,
@@ -14,41 +14,48 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
-import { product } from "../../App";
+import { ProductType } from "../../App";
+import { useSelector } from "react-redux";
+import { RootStore } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import {
+   setProductCart,
+   setProductWishlist,
+} from "../../redux/actions/ProductActions";
 
-interface productProp {
-   product: product;
-   inWishlist: boolean;
-   inCart: boolean;
+interface ProductPropType {
+   product: ProductType;
    setProduct: React.Dispatch<React.SetStateAction<any>>;
-   setWishlist: React.Dispatch<React.SetStateAction<any>>;
-   setCart: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function ProductCard(props: productProp) {
+export default function ProductCard(props: ProductPropType) {
+   const { cart, wishlist } = useSelector((state: RootStore) => state.products);
    let navigate = useNavigate();
+   const dispatch: Dispatch<any> = useDispatch();
 
-   const handleOnClick = (p: product) => {
+   const inWishlist = (id: number): boolean => {
+      if (wishlist.find((product) => product.id === id)) {
+         return true;
+      } else return false;
+   };
+
+   const inCart = (id: number): boolean => {
+      if (cart.find((product) => product.id === id)) {
+         return true;
+      } else return false;
+   };
+
+   const handleOnClick = (p: ProductType) => {
       navigate(`/shop/${p.id}`);
       props.setProduct(p);
    };
 
-   const handleWishlist = (p: product) => {
-      props.setWishlist((prevState: product[]) => {
-         if (prevState.find((product) => product.id === p.id)) {
-            return prevState.filter((product) => product.id !== p.id);
-         }
-         return [...prevState, p];
-      });
+   const handleWishlist = (p: ProductType) => {
+      dispatch(setProductWishlist(p));
    };
 
-   const handleCart = (p: product) => {
-      props.setCart((prevState: product[]) => {
-         if (prevState.find((product) => product.id === p.id)) {
-            return prevState.filter((product) => product.id !== p.id);
-         }
-         return [...prevState, p];
-      });
+   const handleCart = (p: ProductType) => {
+      dispatch(setProductCart(p));
    };
 
    return (
@@ -83,7 +90,7 @@ export default function ProductCard(props: productProp) {
             <CardActions>
                <Button
                   startIcon={
-                     props.inWishlist ? (
+                     inWishlist(props.product.id) ? (
                         <FavoriteIcon />
                      ) : (
                         <FavoriteBorderIcon />
@@ -95,7 +102,7 @@ export default function ProductCard(props: productProp) {
                />
                <Button
                   startIcon={
-                     props.inCart ? (
+                     inCart(props.product.id) ? (
                         <ShoppingCartIcon />
                      ) : (
                         <AddShoppingCartIcon />

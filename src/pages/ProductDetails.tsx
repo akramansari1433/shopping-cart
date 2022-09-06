@@ -1,52 +1,42 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import React from "react";
-import { product } from "../App";
+import React, { Dispatch } from "react";
+import { ProductType } from "../App";
+import { useSelector } from "react-redux";
+import { RootStore } from "../redux/store";
+import { useDispatch } from "react-redux";
+import {
+   setProductCart,
+   setProductWishlist,
+} from "../redux/actions/ProductActions";
 
-interface productProp {
-   product?: {
-      id: number;
-      title: string;
-      description: string;
-      price: number;
-      image: string;
-   };
-   wishlist: product[];
-   cart: product[];
-   setWishlist: React.Dispatch<React.SetStateAction<any>>;
-   setCart: React.Dispatch<React.SetStateAction<any>>;
+interface ProductPropType {
+   product?: ProductType;
 }
 
-export default function ProductDetails(props: productProp) {
-   const inWishlist = (id?: number): boolean => {
-      if (props.wishlist.find((product) => product.id === id)) {
+export default function ProductDetails(props: ProductPropType) {
+   const { cart, wishlist } = useSelector((state: RootStore) => state.products);
+
+   const dispatch: Dispatch<any> = useDispatch();
+   const inWishlist = (id: number): boolean => {
+      if (wishlist.find((product) => product.id === id)) {
          return true;
       } else return false;
    };
 
-   const inCart = (id?: number): boolean => {
-      if (props.cart.find((product) => product.id === id)) {
+   const inCart = (id: number): boolean => {
+      if (cart.find((product) => product.id === id)) {
          return true;
       } else return false;
    };
 
-   const handleWishlist = (p?: product) => {
-      props.setWishlist((prevState: product[]) => {
-         if (prevState.find((product) => product.id === p?.id)) {
-            return prevState.filter((product) => product.id !== p?.id);
-         }
-         return [...prevState, p];
-      });
+   const handleWishlist = (p?: ProductType) => {
+      dispatch(setProductWishlist(p!));
    };
 
-   const handleCart = (p?: product) => {
-      props.setCart((prevState: product[]) => {
-         if (prevState.find((product) => product.id === p?.id)) {
-            return prevState.filter((product) => product.id !== p?.id);
-         }
-         return [...prevState, p];
-      });
+   const handleCart = (p?: ProductType) => {
+      dispatch(setProductCart(p!));
    };
    return (
       <Box sx={{ padding: 3 }}>
@@ -72,7 +62,7 @@ export default function ProductDetails(props: productProp) {
                   style={{ marginTop: 20, marginRight: 10 }}
                   onClick={() => handleWishlist(props.product)}
                >
-                  {inWishlist(props.product?.id)
+                  {inWishlist(props.product?.id!)
                      ? "Remove from wishlist"
                      : "Add to Wishlist"}
                </Button>
@@ -82,7 +72,7 @@ export default function ProductDetails(props: productProp) {
                   style={{ marginTop: 20 }}
                   onClick={() => handleCart(props.product)}
                >
-                  {inCart(props.product?.id)
+                  {inCart(props.product?.id!)
                      ? "Remove from cart"
                      : "Add to cart"}
                </Button>

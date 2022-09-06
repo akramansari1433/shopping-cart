@@ -1,35 +1,32 @@
-import React from "react";
+import React, { Dispatch, useEffect } from "react";
 import { Box, Grid } from "@mui/material";
 import ProductCard from "../components/ProductCard/ProductCard";
 import CircularProgress from "@mui/material/CircularProgress";
-import { product } from "../App";
+import { useSelector } from "react-redux";
+import { RootStore } from "../redux/store";
+import { useDispatch } from "react-redux";
+import { getProducts } from "../redux/actions/ProductActions";
 
-interface productProps {
-   wishlist: product[];
-   cart: product[];
-   products: product[];
-   loading: boolean;
+interface ProductPropType {
    setProduct: React.Dispatch<React.SetStateAction<any>>;
-   setWishlist: React.Dispatch<React.SetStateAction<any>>;
-   setCart: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function Shop(props: productProps) {
-   const inWishlist = (id: number): boolean => {
-      if (props.wishlist.find((product) => product.id === id)) {
-         return true;
-      } else return false;
-   };
+export default function Shop(props: ProductPropType) {
+   const { products, loading } = useSelector(
+      (state: RootStore) => state.products
+   );
 
-   const inCart = (id: number): boolean => {
-      if (props.cart.find((product) => product.id === id)) {
-         return true;
-      } else return false;
-   };
+   const dispatch: Dispatch<any> = useDispatch();
+
+   useEffect(() => {
+      (() => {
+         dispatch(getProducts());
+      })();
+   }, [dispatch]);
 
    return (
       <Box sx={{ padding: 3 }}>
-         {props.loading ? (
+         {loading ? (
             <Box
                sx={{
                   display: "flex",
@@ -41,15 +38,11 @@ export default function Shop(props: productProps) {
             </Box>
          ) : (
             <Grid container justifyContent="center" spacing={3}>
-               {props.products.map((product) => (
+               {products?.map((product) => (
                   <ProductCard
                      product={product}
                      key={product.id}
                      setProduct={props.setProduct}
-                     setWishlist={props.setWishlist}
-                     setCart={props.setCart}
-                     inWishlist={inWishlist(product.id)}
-                     inCart={inCart(product.id)}
                   />
                ))}
             </Grid>

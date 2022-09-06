@@ -9,19 +9,16 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Button, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import { product } from "../../App";
+import { useSelector } from "react-redux";
+import { RootStore } from "../../redux/store";
 
 const StyledToolbar = styled(Toolbar)({
    display: "flex",
    justifyContent: "space-between",
 });
 
-interface productProp {
-   wishlist: product[];
-   cart: product[];
-}
-
-export default function Navbar(props: productProp) {
+export default function Navbar() {
+   const { cart, wishlist } = useSelector((state: RootStore) => state.products);
    return (
       <Box sx={{ flexGrow: 1 }}>
          <AppBar position="static">
@@ -66,7 +63,7 @@ export default function Navbar(props: productProp) {
                      component={Link}
                      to="/wishlist"
                   >
-                     <Badge badgeContent={props.wishlist.length} color="error">
+                     <Badge badgeContent={wishlist.length} color="error">
                         <FavoriteIcon />
                      </Badge>
                   </IconButton>
@@ -77,7 +74,7 @@ export default function Navbar(props: productProp) {
                      component={Link}
                      to="/cart"
                   >
-                     <Badge badgeContent={props.cart.length} color="error">
+                     <Badge badgeContent={cart.length} color="error">
                         <ShoppingCartIcon />
                      </Badge>
                   </IconButton>

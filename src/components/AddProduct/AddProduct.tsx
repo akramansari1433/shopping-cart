@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/actions/ProductActions";
 
 const style = {
    position: "absolute",
@@ -14,49 +16,42 @@ const style = {
    p: 4,
 };
 
-interface product {
-   id?: number;
-   title?: string;
-   description?: string;
-   price?: number;
-   image?: any;
-}
-
 interface modalProp {
    open: boolean;
    handleOpen: React.Dispatch<React.SetStateAction<any>>;
    handleClose: React.Dispatch<React.SetStateAction<any>>;
-   setProducts: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export default function AddProduct(props: modalProp) {
-   const [product, setProduct] = useState<product>();
+   const [id] = useState<number>(new Date().valueOf());
+   const [image, setImage] = useState<any>();
+   const [title, setTitle] = useState<string>();
+   const [description, setDescription] = useState<string>();
+   const [price, setPrice] = useState<number>();
 
-   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      if (name === "image") {
-         let reader = new FileReader();
-         if (e.target.files instanceof FileList) {
-            reader.readAsDataURL(e.target.files[0]);
-            reader.onload = () => {
-               setProduct((prevState) => ({
-                  ...prevState,
-                  image: reader.result,
-                  id: new Date().valueOf(),
-               }));
-            };
-         }
-      } else if (name === "price") {
-         setProduct((prevState) => ({
-            ...prevState,
-            price: parseFloat(value),
-         }));
-      } else setProduct((prevState) => ({ ...prevState, [name]: value }));
+   const dispatch: Dispatch<any> = useDispatch();
+
+   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+      let reader = new FileReader();
+      if (e.target.files instanceof FileList) {
+         reader.readAsDataURL(e.target.files[0]);
+         reader.onload = () => {
+            setImage(reader.result);
+         };
+      }
    };
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      props.setProducts((prevState: product[]) => [...prevState, product]);
+      dispatch(
+         addProduct({
+            id,
+            title: title!,
+            description: description!,
+            image,
+            price: price!,
+         })
+      );
       props.handleClose(true);
       alert("Product added successfully!");
    };
@@ -71,13 +66,23 @@ export default function AddProduct(props: modalProp) {
                onSubmit={handleSubmit}
                style={{ display: "flex", flexDirection: "column" }}
             >
-               <TextField name="image" type="file" onChange={handleChange} />
+               <input
+                  style={{ marginTop: 10 }}
+                  accept="image/*"
+                  name="image"
+                  type="file"
+                  onChange={handleImage}
+                  required
+               />
                <TextField
                   type="text"
                   name="title"
                   label="Title"
                   sx={{ marginTop: 2 }}
-                  onChange={handleChange}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                     setTitle(e.target.value)
+                  }
+                  required
                />
                <TextField
                   type="text"
@@ -86,14 +91,20 @@ export default function AddProduct(props: modalProp) {
                   sx={{ marginTop: 2 }}
                   multiline
                   rows={3}
-                  onChange={handleChange}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                     setDescription(e.target.value)
+                  }
+                  required
                />
                <TextField
                   type="number"
                   name="price"
                   label="Price"
                   sx={{ marginTop: 2 }}
-                  onChange={handleChange}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                     setPrice(parseInt(e.target.value))
+                  }
+                  required
                />
                <Button variant="contained" type="submit" sx={{ marginTop: 2 }}>
                   Add
