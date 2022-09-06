@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -9,6 +9,8 @@ import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
 import Admin from "./pages/Admin";
 import { getAllProducts } from "./utils/api-helper";
+import { useDispatch } from "react-redux";
+import { getProducts } from "./redux/actions/ProductActions";
 
 export interface product {
    id: number;
@@ -25,6 +27,9 @@ function App() {
    const [cart, setCart] = useState<product[]>([]);
 
    const [loading, setLoading] = useState<boolean>(false);
+
+   const dispatch: Dispatch<any> = useDispatch();
+   dispatch(getProducts());
 
    useEffect(() => {
       setLoading(true);
