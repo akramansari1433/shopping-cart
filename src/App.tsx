@@ -11,6 +11,7 @@ import Admin from "./pages/Admin";
 import { getAllProducts } from "./utils/api-helper";
 import { useDispatch } from "react-redux";
 import { getProducts } from "./redux/actions/ProductActions";
+import { Typography } from "@mui/material";
 
 export interface product {
    id: number;
@@ -112,6 +113,14 @@ function App() {
                         loading={loading}
                         setProducts={setProducts}
                      />
+                  }
+               />
+               <Route
+                  path="*"
+                  element={
+                     <Typography variant="h5" py={3} textAlign="center">
+                        Page not found!!!
+                     </Typography>
                   }
                />
             </Routes>
