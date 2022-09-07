@@ -10,10 +10,16 @@ import {
    SET_ERROR,
    SET_PRODUCTS,
    SET_WISHLIST,
-} from "./actionTypes";
+} from "../types";
 
 export const getProducts = () => (dispatch: Dispatch<ProductDispatchTypes>) => {
    dispatch({ type: LOADING_DATA });
+   // try {
+   //    const res = await axios.get("https://fakestoreapi.com/products");
+   //    dispatch({ type: SET_PRODUCTS, payload: res.data });
+   // } catch (error) {
+   //    dispatch({ type: SET_ERROR, payload: error });
+   // }
    axios
       .get("https://fakestoreapi.com/products")
       .then((res) => dispatch({ type: SET_PRODUCTS, payload: res.data }))

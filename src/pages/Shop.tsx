@@ -1,32 +1,26 @@
-import React, { Dispatch, useEffect } from "react";
-import { Box, Grid } from "@mui/material";
+import React from "react";
+import { Box, Grid, Typography } from "@mui/material";
 import ProductCard from "../components/ProductCard/ProductCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector } from "react-redux";
 import { RootStore } from "../redux/store";
-import { useDispatch } from "react-redux";
-import { getProducts } from "../redux/actions/ProductActions";
 
 interface ProductPropType {
    setProduct: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export default function Shop(props: ProductPropType) {
-   const { products, loading } = useSelector(
+   const { products, loading, error } = useSelector(
       (state: RootStore) => state.products
    );
 
-   const dispatch: Dispatch<any> = useDispatch();
-
-   useEffect(() => {
-      (() => {
-         dispatch(getProducts());
-      })();
-   }, [dispatch]);
-
    return (
       <Box sx={{ padding: 3 }}>
-         {loading ? (
+         {error ? (
+            <Typography variant="h5" color="error" textAlign="center">
+               Something went wrong!
+            </Typography>
+         ) : loading ? (
             <Box
                sx={{
                   display: "flex",

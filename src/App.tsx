@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -9,6 +9,8 @@ import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
 import Admin from "./pages/Admin";
 import { Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { getProducts } from "./redux/actions/ProductActions";
 
 export interface ProductType {
    id: number;
@@ -20,6 +22,13 @@ export interface ProductType {
 
 function App() {
    const [product, setProduct] = useState<ProductType>();
+   const dispatch: Dispatch<any> = useDispatch();
+
+   useEffect(() => {
+      (() => {
+         dispatch(getProducts());
+      })();
+   }, [dispatch]);
 
    return (
       <>

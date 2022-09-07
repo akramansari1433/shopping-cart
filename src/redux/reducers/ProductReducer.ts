@@ -8,7 +8,7 @@ import {
    SET_CART,
    ADD_PRODUCT,
    DELETE_PRODUCT,
-} from "../actions/actionTypes";
+} from "../types";
 
 interface InitialState {
    loading: boolean;
