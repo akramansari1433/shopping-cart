@@ -23,7 +23,7 @@ interface modalProp {
 }
 
 export default function AddProduct(props: modalProp) {
-   const [id] = useState<number>(new Date().valueOf());
+   const id: number = new Date().valueOf();
    const [image, setImage] = useState<any>();
    const [title, setTitle] = useState<string>();
    const [description, setDescription] = useState<string>();

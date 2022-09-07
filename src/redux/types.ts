@@ -14,6 +14,7 @@ export type ProductType = {
    image: string;
 };
 
+//dispatch types
 interface LoadingData {
    type: typeof LOADING_DATA;
 }
