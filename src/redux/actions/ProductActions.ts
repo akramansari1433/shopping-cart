@@ -12,19 +12,16 @@ import {
    SET_WISHLIST,
 } from "../types";
 
-export const getProducts = () => (dispatch: Dispatch<ProductDispatchTypes>) => {
-   dispatch({ type: LOADING_DATA });
-   // try {
-   //    const res = await axios.get("https://fakestoreapi.com/products");
-   //    dispatch({ type: SET_PRODUCTS, payload: res.data });
-   // } catch (error) {
-   //    dispatch({ type: SET_ERROR, payload: error });
-   // }
-   axios
-      .get("https://fakestoreapi.com/products")
-      .then((res) => dispatch({ type: SET_PRODUCTS, payload: res.data }))
-      .catch((error) => dispatch({ type: SET_ERROR, payload: error }));
-};
+export const getProducts =
+   () => async (dispatch: Dispatch<ProductDispatchTypes>) => {
+      dispatch({ type: LOADING_DATA });
+      try {
+         const res = await axios.get("https://fakestoreapi.com/products");
+         dispatch({ type: SET_PRODUCTS, payload: res.data });
+      } catch (error) {
+         dispatch({ type: SET_ERROR, payload: (error as Error).message });
+      }
+   };
 
 export const setProductCart =
    (product: ProductType) => (dispatch: Dispatch<ProductDispatchTypes>) => {

@@ -25,8 +25,8 @@ function App() {
    const dispatch: Dispatch<any> = useDispatch();
 
    useEffect(() => {
-      (() => {
-         dispatch(getProducts());
+      (async () => {
+         dispatch(await getProducts());
       })();
    }, [dispatch]);
 
