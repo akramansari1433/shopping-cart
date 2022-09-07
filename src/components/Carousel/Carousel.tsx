@@ -3,28 +3,10 @@ import "./Carousel.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import img1 from "../../assets/images/1.jpg";
 import img2 from "../../assets/images/2.jpg";
 import img3 from "../../assets/images/3.jpg";
-
-const PreviousBtn = (props: any) => {
-   const { className, onClick } = props;
-   return (
-      <div className={className} onClick={onClick}>
-         <ArrowBackIosIcon color="warning" fontSize="large" />
-      </div>
-   );
-};
-const NextBtn = (props: any) => {
-   const { className, onClick } = props;
-   return (
-      <div className={className} onClick={onClick}>
-         <ArrowForwardIosIcon color="warning" fontSize="large" />
-      </div>
-   );
-};
+import { Box } from "@mui/material";
 
 export default function Carousel() {
    const settings = {
@@ -32,11 +14,9 @@ export default function Carousel() {
       autoplay: true,
       speed: 500,
       autoplaySpeed: 3000,
-      prevArrow: <PreviousBtn />,
-      nextArrow: <NextBtn />,
    };
    return (
-      <div className="container">
+      <Box p={3}>
          <Slider {...settings}>
             <div>
                <img alt="cover" src={img1} />
@@ -48,6 +28,6 @@ export default function Carousel() {
                <img alt="cover" src={img3} />
             </div>
          </Slider>
-      </div>
+      </Box>
    );
 }
