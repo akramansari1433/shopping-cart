@@ -35,17 +35,20 @@ const productReducer = (
          return {
             ...state,
             loading: true,
+            error: "",
          };
       case SET_PRODUCTS:
          return {
             ...state,
             products: action.payload,
             loading: false,
+            error: "",
          };
       case SET_ERROR:
          return {
             ...state,
             error: action.payload,
+            loading: false,
          };
       case SET_WISHLIST:
          const prodIndexWishlist = state.wishlist?.findIndex(
